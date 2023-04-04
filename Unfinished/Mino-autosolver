@@ -20,7 +20,7 @@ def Mino_ftp_engine()
     
 Mino_ftp_engine()
 
-def Mino_web_engine_login(): #Not going to cover the sql bit as i dont think its necessary and its time consuming to get a response back. I might add a seperate script to the repo that will take care of it
+def Mino_web_engine_login(): #Not going to cover the sql bit as i dont think its necessary and its time consuming to get a response back.
     url_L = f'http://{tar_ip}/login.php'
     PostData_L = {'email': 'M!n0taur', 'password': 'aminotauro'}
     res = sess.post(url_L, data=PostData_L)
