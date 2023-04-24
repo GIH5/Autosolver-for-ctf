@@ -20,6 +20,6 @@ def engine():
      print(get_reqq.text)
 
   except:
-     print("We ran into a issue!\neither not enough arguments or the ip is incorrect and couldn't connect to the target")
+     print("We ran into a issue!\neither not enough arguments or the ip is incorrect and couldn't connect to the target, one argument is needed.")
 
 engine()
