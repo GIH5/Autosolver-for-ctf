@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-#Made on Mar 19 2023
-#Created in python3
-#A easy script for a very easy broken access control ctf on tryhackme(called 'Neighbour')
+'''
+Made on Mar 19 2023
+Created in python3
+A easy script for a very easy broken access control ctf on tryhackme(called 'Neighbour')
+You can read the source to know how to beat the machine
+'''
+
 import requests as req
 import pprint
 import sys
