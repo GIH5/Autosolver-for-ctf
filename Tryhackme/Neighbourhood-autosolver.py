@@ -2,7 +2,7 @@
 '''
 Made on Mar 19 2023
 Created in python3
-A easy script for a very easy broken access control ctf on tryhackme(called 'Neighbour')
+A easy script for a very easy broken access control ctf on tryhackme(https://tryhackme.com/room/neighbour)
 You can read the source to know how to beat the machine
 '''
 
