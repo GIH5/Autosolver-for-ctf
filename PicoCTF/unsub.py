@@ -1,3 +1,6 @@
+#Challenge: Unsubscriptions Are Free
+#Cat: Binexp
+
 from pwn import *
 import sys
 
